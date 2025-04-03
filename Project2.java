@@ -1,6 +1,7 @@
 import java.io.*;
 import java.util.*;
 
+<<<<<<< Updated upstream
 public class Project2{
 
     public static List<Store> readFile(String filePath) throws Exception {
@@ -61,3 +62,13 @@ public class Project2{
 
 
 
+=======
+public class Project2 {
+    
+
+}
+
+public static void main(String[] args) throws Exception {
+
+}
+>>>>>>> Stashed changes
