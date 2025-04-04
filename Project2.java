@@ -1,5 +1,4 @@
 import java.io.*;
-import java.lang.reflect.Array;
 import java.util.*;
 
 
@@ -48,6 +47,23 @@ public class Project2{
         return queryList;
 
     }
+
+    
+    // Comparator for sorting stores by distance
+    public static ArrayList<Store> insertionSort(ArrayList<Store> storeList) {
+        for (int i = 1; i < storeList.size(); i++){
+            Store key = storeList.get(i);
+            int j = i - 1;
+
+            while (j >= 0 && storeList.get(j).distance > key.distance) {
+                storeList.set(j + 1, storeList.get(j)); // Shift the element to the right
+                j--;
+            }
+            storeList.set(j + 1, key); // Place the key in its correct position
+        }
+        return storeList;
+    }
+
     public static void main(String[] args) throws Exception {
 
         System.out.println("Reading in file...");
@@ -59,10 +75,29 @@ public class Project2{
        List <Query> queryList = readQuery("Queries.csv");
 
        for (Query q : queryList){
-            ArrayList<Store> nearbyStores = new ArrayList<Store>();
+            
             for (Store s : storeList) {
-                Store.computeDistance(q.theLat, q.queryLong); // compute distance for each store
+                s.computeDistance(q.latitude, q.longitude); // store the computed distance             
             }
+
+            Store kthStore = Store.randSelect(storeList, 0, storeList.size() - 1, q.storesDesired);
+            System.out.println("The " + q.storesDesired + " closest Stores to (" + q.latitude + ", " + q.longitude + "):");
+           
+            double kthDistance = kthStore.distance;
+
+            ArrayList<Store> selectedStores = new ArrayList<Store>();
+            for (Store s : storeList) {
+                if (s.distance <= kthDistance) {
+                    selectedStores.add(s);
+                }
+            }
+
+            // Sort the selected stores by distance with linear sort
+            selectedStores = insertionSort(selectedStores);
+            for (int i = 0; i < q.storesDesired && i < selectedStores.size(); i++) {
+                System.out.println(selectedStores.get(i).toString() + " - " + Math.round(selectedStores.get(i).distance * 100.0) / 100.0 + " miles");
+            }
+            System.out.println(); // Print a blank line for better readability
        }
     }
 
