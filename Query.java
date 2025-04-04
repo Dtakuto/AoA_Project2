@@ -1,4 +1,5 @@
 public class Query {
+    
     public double latitude;
     public double longitude;
     public int storesDesired;
