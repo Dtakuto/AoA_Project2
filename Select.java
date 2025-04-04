@@ -21,27 +21,32 @@ public class Select {
     }
 
     public static int randPartition(List<Store> storeList, int leftIdx, int rightIdx) {
-		int randIndex = leftIdx + (int)(Math.random() * (rightIdx - leftIdx + 1));
-		Collections.swap(storeList, randIndex, rightIdx);
-
-        double pivot = storeList.get(rightIdx).distance; // Choose the rightmost element as pivot
+        int pivotIndex = leftIdx + (int)(Math.random() * (rightIdx - leftIdx + 1));
+        double pivotDistance = storeList.get(pivotIndex).distance;
+    
+        // Move pivot to end
+        Store temp = storeList.get(pivotIndex);
+        storeList.set(pivotIndex, storeList.get(rightIdx));
+        storeList.set(rightIdx, temp);
+    
         int i = leftIdx - 1;
-
+    
         for (int j = leftIdx; j < rightIdx; j++) {
-            if (storeList.get(j).distance <= pivot) {
+            if (storeList.get(j).distance <= pivotDistance) {
                 i++;
                 // Swap storeList[i] and storeList[j]
-                Store temp = storeList.get(i);
+                temp = storeList.get(i);
                 storeList.set(i, storeList.get(j));
                 storeList.set(j, temp);
             }
         }
-
-        i++;
-
-        Store temp = storeList.get(i);
-        storeList.set(i, storeList.get(rightIdx));
-        storeList.set(rightIdx, temp); // Swap the pivot to its correct position
-        return i;
+    
+        // Move pivot to its final place
+        temp = storeList.get(i + 1);
+        storeList.set(i + 1, storeList.get(rightIdx));
+        storeList.set(rightIdx, temp);
+    
+        return i + 1;
     }
+    
 }

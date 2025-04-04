@@ -75,12 +75,11 @@ public class Project2{
             Store kthStore = Select.randSelect(storeList, 0, storeList.size() - 1, q.storesDesired);
             System.out.println("The " + q.storesDesired + " closest Stores to (" + q.latitude + ", " + q.longitude + "):");
            
-            double distance = kthStore.distance;
 
             ArrayList<Store> selectedStores = new ArrayList<Store>();
 
             for (Store s : storeList) {
-                if (s.distance <= distance) {
+                if (s.distance <= kthStore.distance) {
                     selectedStores.add(s);
                 }
             }
