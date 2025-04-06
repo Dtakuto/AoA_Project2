@@ -1,14 +1,23 @@
 import java.util.ArrayList;
 
 public class Result {
-    private Query q; // Assuming Query is a class that contains storesDesired
-    private ArrayList<Store> selectedStores; // Assuming selectedStores is a list of Store objects
+    private Query q;
+    private ArrayList<Store> selectedStores;
 
+    /**
+     *
+     * @param theQ
+     * @param theSlectedStores
+     */
     public Result(Query theQ, ArrayList<Store> theSlectedStores) {
         q = theQ;
         selectedStores = theSlectedStores;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public String toString() {
         StringBuilder result = new StringBuilder();
